@@ -12,7 +12,7 @@ const LeadCard: React.FC<LeadCardProps> = ({ lead, index }) => {
 
   return (
     <div 
-      className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-5 shadow-lg flex flex-col space-y-3 transition-all duration-300 hover:border-purple-400/50 hover:shadow-purple-500/20"
+      className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-2xl shadow-black/30 flex flex-col space-y-3 transition-all duration-300 hover:border-purple-400/80 hover:shadow-purple-500/40 hover:scale-[1.02]"
       style={{ animation: `fadeInUp 0.5s ${animationDelay} ease-out forwards`, opacity: 0 }}
     >
       <h3 className="text-xl font-bold text-white truncate">{lead.name}</h3>
