@@ -83,16 +83,31 @@ export default function App() {
     try {
       const generatedLeads = await generateLeads(searchQuery, place, category, count, userLocation);
       setLeads(generatedLeads);
+      
+      if (generatedLeads.length === 0) {
+        showNotification('No leads found. Try a different search.', 'error');
+        return; // Stop further execution in the try block
+      }
 
-      if (sendToWebhook && webhookUrl) {
-        const success = await sendLeadsToWebhook(generatedLeads, webhookUrl);
-        if (success) {
-          showNotification('✅ Leads Sent Successfully to Webhook.', 'success');
+      // If we have leads, handle notifications and webhooks
+      if (sendToWebhook) {
+        if (webhookUrl) {
+          const success = await sendLeadsToWebhook(generatedLeads, webhookUrl);
+          if (success) {
+            showNotification('✅ Leads Sent Successfully to Webhook.', 'success');
+          } else {
+            showNotification('❌ Webhook send failed — Please check your URL or connection.', 'error');
+          }
         } else {
-          showNotification('❌ Lead Generation Failed — Please check your webhook or internet connection.', 'error');
+          showNotification('Webhook is enabled, but no URL is set.', 'error');
         }
-      } else if (sendToWebhook && !webhookUrl) {
-        showNotification('Webhook is enabled, but no URL is set.', 'error');
+      } else {
+        // Webhook is disabled, give feedback on generation itself
+        if (generatedLeads.length < count) {
+          showNotification(`✅ Found ${generatedLeads.length} leads. That seems to be all for this search!`, 'success');
+        } else {
+          showNotification(`✅ Successfully generated ${generatedLeads.length} leads!`, 'success');
+        }
       }
     } catch (error) {
       console.error(error);
