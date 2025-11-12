@@ -1,0 +1,7 @@
+{
+  "name": "LeadMind AI 2.0",
+  "description": "An intelligent Google Maps lead generation tool with a smooth UI, webhook integration, and advanced UX. It helps users generate business leads and send the results to a webhook.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
